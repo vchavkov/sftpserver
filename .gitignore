@@ -13,4 +13,4 @@ target
 *.ear
 src/main/resources/*.properties
 .vscode/
-.classpath
+/.classpath
