@@ -133,66 +133,57 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- Package Deb to upload to repo -->
-            <!--<plugin>-->
-                <!--<artifactId>jdeb</artifactId>-->
-                <!--<groupId>org.vafer</groupId>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>sftpserver-master</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>jdeb</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<deb>-->
-                                <!--${project.build.directory}/sftpserver-master_${project.version}_all.deb-->
-                            <!--</deb>-->
-                            <!--<controlDir>${project.parent.basedir}/src/deb</controlDir>-->
-                            <!--<dataSet>-->
+             <!-- build .deb packages -->
+            <plugin>
+                <artifactId>jdeb</artifactId>
+                <groupId>org.vafer</groupId>
+                <executions>
+                    <execution>
+                        <id>sftpserver</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jdeb</goal>
+                        </goals>
+                        <configuration>
+                            <deb>
+                                ${project.basedir}/target/sftpserver-${project.version}.deb
+                            </deb>
+                            <controlDir>${project.basedir}/src/deb</controlDir>
+                            <dataSet>
+                                <data>
+                                    <src>${project.basedir}/linux/sftpd.sh</src>
+                                    <type>file</type>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/usr/bin/</prefix>
+                                        <filemode>755</filemode>
+                                    </mapper>
+                                </data>
+                                <data>
+                                    <src>${project.basedir}/src/deb/default
+                                    </src>
+                                    <type>file</type>
+                                    <dst>/etc/default/sftpserver-master</dst>
+                                    <conffile>true</conffile>
+                                </data>
+                                <data>
+                                    <src>${project.basedir}/src/deb/upstart
+                                    </src>
+                                    <type>file</type>
+                                    <dst>/etc/init/sftpserver-master.conf</dst>
+                                    <conffile>true</conffile>
+                                </data>
+                                <data>
+                                    <src>${project.basedir}/src/deb/init</src>
+                                    <type>file</type>
+                                    <dst>/etc/init.d/sftpserver-master</dst>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <filemode>755</filemode>
+                                    </mapper>
+                                </data>
                                 <!--<data>-->
-                                    <!--<src>${basedir}/../bin/sftpserver-master</src>-->
-                                    <!--<type>file</type>-->
-                                    <!--<mapper>-->
-                                        <!--<type>perm</type>-->
-                                        <!--<prefix>/usr/bin/</prefix>-->
-                                        <!--<filemode>755</filemode>-->
-                                    <!--</mapper>-->
-                                <!--</data>-->
-                                <!--<data>-->
-                                    <!--<src>${basedir}/../bin/sftpserver-initialize-acl</src>-->
-                                    <!--<type>file</type>-->
-                                    <!--<mapper>-->
-                                        <!--<type>perm</type>-->
-                                        <!--<prefix>/usr/bin/</prefix>-->
-                                        <!--<filemode>755</filemode>-->
-                                    <!--</mapper>-->
-                                <!--</data>-->
-                                <!--<data>-->
-                                    <!--<src>${project.parent.basedir}/src/deb/sftpserver-master/default-->
-                                    <!--</src>-->
-                                    <!--<type>file</type>-->
-                                    <!--<dst>/etc/default/sftpserver-master</dst>-->
-                                    <!--<conffile>true</conffile>-->
-                                <!--</data>-->
-                                <!--<data>-->
-                                    <!--<src>${project.parent.basedir}/src/deb/sftpserver-master/upstart-->
-                                    <!--</src>-->
-                                    <!--<type>file</type>-->
-                                    <!--<dst>/etc/init/sftpserver-master.conf</dst>-->
-                                    <!--<conffile>true</conffile>-->
-                                <!--</data>-->
-                                <!--<data>-->
-                                    <!--<src>${project.parent.basedir}/src/deb/sftpserver-master/init</src>-->
-                                    <!--<type>file</type>-->
-                                    <!--<dst>/etc/init.d/sftpserver-master</dst>-->
-                                    <!--<mapper>-->
-                                        <!--<type>perm</type>-->
-                                        <!--<filemode>755</filemode>-->
-                                    <!--</mapper>-->
-                                <!--</data>-->
-                                <!--<data>-->
-                                    <!--<src>${basedir}/../bin/bootstrap.py</src>-->
+                                    <!--<src>${project.basedir}/bin/bootstrap.py</src>-->
                                     <!--<type>file</type>-->
                                     <!--<mapper>-->
                                         <!--<type>perm</type>-->
@@ -200,11 +191,11 @@
                                         <!--<filemode>755</filemode>-->
                                     <!--</mapper>-->
                                 <!--</data>-->
-                            <!--</dataSet>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
+                            </dataSet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
         <!-- Deployment Maven-S3 -->
         <extensions>
