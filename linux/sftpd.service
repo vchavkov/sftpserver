@@ -1,0 +1,11 @@
+[Unit]
+Description=SFTPD Server
+
+[Service]
+Type=forking
+ExecStart=/opt/sftpd/bin/sftpd.sh start
+ExecRestart=/opt/sftpd/bin/sftpd.sh restart
+ExecStop=/opt/sftpd/bin/sftpd.sh stop
+
+[Install]
+WantedBy=multi-user.target
